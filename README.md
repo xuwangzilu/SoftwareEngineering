@@ -1,4 +1,4 @@
-# intership
+# SoftwareEngineeringProject
 
 ## Project setup
 ```
