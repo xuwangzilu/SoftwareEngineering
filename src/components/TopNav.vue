@@ -22,6 +22,7 @@
           <el-menu-item index="/info">信息管理</el-menu-item>
           <el-menu-item index="/history">浏览记录</el-menu-item>
           <el-menu-item index="/favorite">收藏夹</el-menu-item>
+          <el-menu-item index="/security">账号安全</el-menu-item>
         </el-submenu>
         <el-menu-item index="/logout" @click="logOut">注销</el-menu-item>       
       </el-menu>

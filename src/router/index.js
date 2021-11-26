@@ -13,6 +13,7 @@ import Goods from "../views/User/Goods"
 import Order from "../views/User/Order"
 import Chat from "../views/User/Chat"
 import Confirm from "../views/User/Confirm"
+import Security from "../views/User/Security"
 import ShoppingCart from "../views/User/ShoppingCart"
 import Stream from "../views/User/Stream"
 import Upload from "../views/User/Upload"
@@ -37,6 +38,7 @@ const routes = [
 	{ path: '/order', 		component: Order },
     { path: '/chat',		component: Chat},
     { path: '/confirm',		component: Confirm},
+	{ path: '/security',		component: Security},
     { path: '/shoppingcart',		component: ShoppingCart},
     { path: '/stream',		component: Stream},
     { path: '/upload',		component: Upload},

@@ -2,7 +2,7 @@
 <el-scrollbar height="673px">
 		<el-container style="height: 700px">
 			<el-header style="background-color: #2c3e50; color: white">
-				<back-nav />
+				<BackNav />
 			</el-header>
 			<el-container style="height: 100%">
 				<el-aside width="200px" style="background-color: #545c64;height: 100%;">
