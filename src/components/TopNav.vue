@@ -13,8 +13,8 @@
         <el-menu-item index="/home">首页</el-menu-item>
         <el-menu-item index="/login">登录/注册</el-menu-item>
       </el-menu>
-      <!--已登录状态的导航栏-->
-        <el-menu v-else :default-active="$route.path" mode="horizontal" background-color="#409EFF"
+      <!--用户登录状态的导航栏-->
+        <el-menu v-else-if="userType==='user'" :default-active="$route.path" mode="horizontal" background-color="#409EFF"
                  text-color="#fff" active-text-color="#ffd04b" style="border-bottom: 0" router>
         <el-menu-item index="/home">首页</el-menu-item>
         <el-submenu>
@@ -23,6 +23,17 @@
           <el-menu-item index="/history">浏览记录</el-menu-item>
           <el-menu-item index="/favorite">收藏夹</el-menu-item>
           <el-menu-item index="/security">账号安全</el-menu-item>
+        </el-submenu>
+        <el-menu-item index="/logout" @click="logOut">注销</el-menu-item>       
+      </el-menu>
+      <!--管理员登录状态的导航栏-->
+      <el-menu v-else :default-active="$route.path" mode="horizontal" background-color="#409EFF"
+                text-color="#fff" active-text-color="#ffd04b" style="border-bottom: 0" router>
+      <el-menu-item index="/home">首页</el-menu-item>
+        <el-submenu>
+          <template #title>管理员中心</template>
+          <el-menu-item index="/admin/examine">审核</el-menu-item>
+          <el-menu-item index="/admin/report">受理举报</el-menu-item>
         </el-submenu>
         <el-menu-item index="/logout" @click="logOut">注销</el-menu-item>       
       </el-menu>
@@ -38,6 +49,7 @@ export default{
       return{
       activeIndex: '',
       loginStatus: false,
+      userType:'user',
       }
   },
   created(){
@@ -60,9 +72,15 @@ export default{
           break
         case '0':
           break
+        case undefined:
+          window.sessionStorage.setItem('uid', '0')
+          break
         //若用户id不为0，则设定登录状态为true
         default:
           this.loginStatus = true
+          if(status.length!=7){
+            this.userType='admin';
+          }
           break
       }
     },

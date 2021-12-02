@@ -3,7 +3,8 @@
     <el-col :span="3">
       <h1 style="margin-top: 10px">{{ title }}</h1>
     </el-col>
-    <el-col :span="2" :offset="19">
+    <el-col :span="3" :offset="18">
+      <el-button type="primary" plain style="margin-top: 10px" @click="$router.push('/home')">首页</el-button>
       <el-button type="danger" style="margin-top: 10px" @click="logOut">注销</el-button>
     </el-col>
   </el-row>
