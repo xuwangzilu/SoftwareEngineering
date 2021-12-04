@@ -18,7 +18,7 @@
       </el-form-item>
       <el-form-item label="密码" prop="password" style="text-align:left;">
         <el-input v-model="loginForm.password" show-password style="width: 200px;padding: 0px;margin-right: 10px;"></el-input>
-        <el-button type="text" size="medium" @click="startFindPassword()" style="color:#4169E1;">忘记密码?</el-button>
+        <el-button v-if="loginForm.type==='用户'" type="text" size="medium" @click="startFindPassword()" style="color:#4169E1;">忘记密码?</el-button>
       </el-form-item>
       <el-form-item style="text-align:left;">
         <el-button type="primary" @click="startRegister" style="width: 32%">注册</el-button>
@@ -175,12 +175,13 @@ export default {
     //完善学号验证规则
     const validateIDNumber = (rule, value, callback) => {
       if (value === '') {
-        callback(new Error('请输入您的学号'))
+        callback(new Error('请输入您的账号'))
       }
-      else if(value.length !== 7&&value.length !== 4) {
-        callback(new Error('学号应为4或7位'))
-      }
-      else {
+      else if(value.length !== 7&&this.loginForm.type==='用户') {
+        callback(new Error('用户账号应为7位'))
+      }else if(value.length !== 4&&this.loginForm.type==='管理员'){
+        callback(new Error('管理员账号应为4位'))
+      }else {
         callback();
       }
     };
@@ -355,6 +356,8 @@ export default {
         ElMessage.error('用户名或密码错误！')
       }else{
         ElMessage.success('用户登录成功！')
+        //使用学号'1234567'作为测试
+        uid='1234567';
         window.sessionStorage.setItem('uid',uid)
         this.$router.push('/home')
       }
@@ -426,7 +429,7 @@ export default {
 
           //自动登录，并跳转到主页，此处'1'后期应改为用户学号
           ElMessage.success('注册成功,1秒后将为您自动登录...');
-          window.sessionStorage.setItem('uid','1');
+          window.sessionStorage.setItem('uid','1234567');
           setTimeout(() => {
             this.$router.push('/home')
           }, 1000)
