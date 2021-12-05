@@ -1,5 +1,5 @@
 <template>
-  <div style="background-color: #409EFF; height: 60px">
+  <div style="background-color: #3399CC; height: 60px">
     <el-row>
       <el-col :span="8">
         <el-space>
@@ -8,14 +8,14 @@
       </el-col>
       <!--未登录状态的导航栏-->
       <el-col :offset="11" :span="5">
-        <el-menu v-if="loginStatus===false" default-active='/home' mode="horizontal" background-color="#409EFF"
-                 text-color="#fff" active-text-color="#ffd04b" style="border-bottom: 0" router>
+        <el-menu v-if="loginStatus===false" default-active='/home' mode="horizontal" background-color="#3399CC"
+                 text-color="#fff" active-text-color="#FFFFCC" style="border-bottom: 0" router>
         <el-menu-item index="/home">首页</el-menu-item>
         <el-menu-item index="/login">登录/注册</el-menu-item>
       </el-menu>
       <!--用户登录状态的导航栏-->
-        <el-menu v-else-if="userType==='user'" :default-active="$route.path" mode="horizontal" background-color="#409EFF"
-                 text-color="#fff" active-text-color="#ffd04b" style="border-bottom: 0" router>
+        <el-menu v-else-if="userType==='user'" :default-active="$route.path" mode="horizontal" background-color="#3399CC"
+                 text-color="#fff" active-text-color="#FFFFCC" style="border-bottom: 0" router>
         <el-menu-item index="/home">首页</el-menu-item>
         <el-submenu>
           <template #title>个人中心</template>
@@ -27,8 +27,8 @@
         <el-menu-item index="/logout" @click="logOut">注销</el-menu-item>       
       </el-menu>
       <!--管理员登录状态的导航栏-->
-      <el-menu v-else :default-active="$route.path" mode="horizontal" background-color="#409EFF"
-                text-color="#fff" active-text-color="#ffd04b" style="border-bottom: 0" router>
+      <el-menu v-else :default-active="$route.path" mode="horizontal" background-color="#3399CC"
+                text-color="#fff" active-text-color="#FFFFCC" style="border-bottom: 0" router>
       <el-menu-item index="/home">首页</el-menu-item>
         <el-submenu>
           <template #title>管理员中心</template>
@@ -43,7 +43,7 @@
 </template>
 
 <script>
-import {ElMessage} from "element-plus";
+import {ElMessage, ElMessageBox} from "element-plus";
 export default{
   data(){
       return{
@@ -58,10 +58,31 @@ export default{
 
   methods:{
     logOut(){
-      //设置登录状态为false
-      window.sessionStorage.setItem('uid','0');
-      ElMessage.success('注销成功!');
-      this.loginStatus=false;
+      //对话框询问
+      ElMessageBox.confirm(
+        '您的账号将注销登录,是否继续操作?',
+        '确认',
+        {
+          confirmButtonText:'继续',
+          cancelButtonText:'取消',
+          type:'warning',
+        }
+      ).then(()=>{
+        //设置登录状态为false
+        window.sessionStorage.setItem('uid','0');
+        //刷新页面
+        this.$router.go(0);
+        this.loginStatus=false;        
+        ElMessage({
+          type:'success',
+          message:'注销成功!',
+        });
+      }).catch(()=>{
+        ElMessage({
+          type:'info',
+          message:'取消注销',
+        });
+      })
     },
 
     getLoginStatus() {
