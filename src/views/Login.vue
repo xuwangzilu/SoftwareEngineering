@@ -135,8 +135,15 @@
 </template>
 
 <script>
-import {ElMessage} from 'element-plus'
+import { h } from 'vue'
+import { ElNotification,ElMessage } from 'element-plus';
 export default {
+  created(){
+    ElNotification({
+      title: '测试规范',
+      message: h('i', { style: 'color: teal' }, '普通用户账号长7位,密码包含字母和数字、8-20位即可;管理员账号长4位,密码同上即可;手机号码长11位,验证码长6位即可。'),
+    })
+  },
   data(){
     //登录密码验证规则
     const validatePassword = (rule, value, callback) => {

@@ -281,7 +281,7 @@
 </template>
 
 <script>
-import { ElMessage } from 'element-plus';
+import ElMessage from "element-plus"
 import TopNav from "../components/TopNav"
 export default {
     components:{
