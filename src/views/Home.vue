@@ -95,7 +95,7 @@
         </el-card>
       </el-card>
       <!--走马灯2-->
-      <el-carousel :interval="3000" type="card" indicator-position="none" height="240px" style="width: 627px;">
+      <el-carousel :interval="1000" type="card" indicator-position="none" height="240px" style="width: 627px;">
         <el-carousel-item v-for="item in goodsList" :key="item.id" style="margin-left: 38px;">
           <el-card :body-style="{ padding: '0px' }" style="width: 220px;height: 240px;" @click="jumpCard(item.id)">
             <el-image :src="item.path" fit="scale-down" />
@@ -305,6 +305,10 @@ export default {
       ]
       //获取用户ID
       this.userID=window.sessionStorage.getItem('uid');
+      if(this.userID === null){
+        this.userID='0';
+      }
+      console.log(this.userID);
       //调用接口：传入（用户ID） 返回（用户购物车数量，待付款数量，待评价数量）
       this.shoppingCartNum='0';
       this.notPayNum='0';
