@@ -38,13 +38,13 @@ const routes = [
 	{ path: '/order', 		component: Order },
     { path: '/chat',		component: Chat},
     { path: '/confirm',		component: Confirm},
-	{ path: '/security',		component: Security},
-    { path: '/shoppingcart',		component: ShoppingCart},
+	{ path: '/security',	component: Security},
+    { path: '/shoppingcart',component: ShoppingCart},
     { path: '/stream',		component: Stream},
     { path: '/upload',		component: Upload},
 
-	{ path: '/admin/examine', 		component: AdminExamine },
-	{ path: '/admin/report', 		component: AdminReport },
+	{ path: '/admin/examine',component: AdminExamine },
+	{ path: '/admin/report', component: AdminReport },
 
 ]
 

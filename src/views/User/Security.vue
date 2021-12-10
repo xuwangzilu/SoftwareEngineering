@@ -6,6 +6,28 @@
     </el-header>
     <el-main>
       <el-tabs type="border-card" style="margin:20px 10%;width: 80%;height: 470px;">
+        <!--账号安全中心主页-->
+        <el-tab-pane label="Security Center">
+          Security Center
+          <el-card v-if="activePwd===0" :body-style="{padding: '0px 0px 0px 0px', backgroundColor: '#F5F5F5',}" 
+            style="margin: 20px 5px;height: 300px;">
+            <div style="text-align: left;">
+              <span style="display: inline-block;color: #191970;margin: 20px 0px 5px 20px;font-size: 18px;">
+                您好，欢迎来到用户账号安全中心！您可以在此进行修改密码和修改绑定手机号两种操作：
+              </span><br/>
+              <span style="display: inline-block;color: #000000;margin: 20px 0px 5px 60px;font-size: 14px;">
+                (1) 修改密码: 用户在使用账号绑定手机号接收短信验证码完成身份验证后，可修改账号密码(注：密码应长8-20位，并同时包含字母与数字)。
+              </span><br/>    
+              <span style="display: inline-block;color: #000000;margin: 20px 0px 8px 60px;font-size: 14px;">
+                (2) 修改绑定手机号: 用户在使用新手机号码接收短信验证码完成身份验证后，可修改账号绑定手机号码(注：仅支持中国大陆地区(+86)手机号码，格式以实际为准)。
+              </span>  
+              <span style="display: inline-block;color: #191970;margin: 20px 0px 115px 60px;font-size: 18px;">
+                请根据需要点击上方选项卡，切换到对应面板并进行相关流程。
+              </span><br/>                                    
+            </div>            
+          </el-card>                    
+        </el-tab-pane>        
+        <!--修改密码-->
         <el-tab-pane label="Modify Password">
           Modify Password
           <el-steps :space="200" :active="activePwd" process-status="finish" finish-status="success" simple style="margin-top: 15px;">
@@ -145,7 +167,7 @@ export default {
       identifyAndModify(input){
         if(this.newTel===''){
           ElMessage.error('请输入新的手机号码');
-        }else if(this.newTel.length<11){
+        }else if(this.newTel.length!==11){
           ElMessage.error('手机号码应为11位');          
         }else if(input.length===6){
           if(input===this.CAPTCHA){

@@ -1,7 +1,7 @@
 <template>
 <el-scrollbar height="673px">
 		<el-container style="height: 700px">
-			<el-header style="background-color: #2c3e50; color: white">
+			<el-header style="background-color: #0099CC; color: white">
 				<BackNav />
 			</el-header>
 			<el-container style="height: 100%">

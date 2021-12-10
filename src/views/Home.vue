@@ -95,7 +95,7 @@
         </el-card>
       </el-card>
       <!--走马灯2-->
-      <el-carousel :interval="1000" type="card" indicator-position="none" height="240px" style="width: 627px;">
+      <el-carousel type="card" indicator-position="none" height="240px" style="width: 627px;">
         <el-carousel-item v-for="item in goodsList" :key="item.id" style="margin-left: 38px;">
           <el-card :body-style="{ padding: '0px' }" style="width: 220px;height: 240px;" @click="jumpCard(item.id)">
             <el-image :src="item.path" fit="scale-down" />
@@ -278,6 +278,8 @@
   </el-footer>
   </el-container>
 </div>
+<el-backtop :bottom="100" :right="40">
+</el-backtop>
 </template>
 
 <script>
@@ -290,10 +292,10 @@ export default {
     created(){
       //为图片列表赋值
       this.imageList=[
-          { no:'1',path: require("../assets/1.jpg")},
-          { no:'2',path: require("../assets/2.png")},
-          { no:'3',path: require("../assets/3.jpg")},
-          { no:'4',path: require("../assets/4.png")},
+        { no:'1',path: require("../assets/1.jpg")},
+        { no:'2',path: require("../assets/2.png")},
+        { no:'3',path: require("../assets/3.jpg")},
+        { no:'4',path: require("../assets/4.png")},
       ];
       this.currentDate=new Date();
       this.goodsList=[     
@@ -388,7 +390,7 @@ export default {
           return
         }else{
           this.$router.push({
-            path:'./result',
+            path:'/result',
             query:{
               catalog:item,
             }
