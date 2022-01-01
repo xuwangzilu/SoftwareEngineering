@@ -365,7 +365,7 @@ export default {
         ElMessage.success('用户登录成功！')
         //使用学号'1234567'作为测试
         uid='1234567';
-        window.sessionStorage.setItem('uid',uid)
+        window.sessionStorage.setItem('uid',uid);
         this.$router.push('/home')
       }
     },
@@ -378,7 +378,7 @@ export default {
         ElMessage.error('管理员ID或密码错误！')
       }else{
         ElMessage.success('管理员登录成功！')
-        window.sessionStorage.setItem('uid',account)
+        window.sessionStorage.setItem('uid',account);
         this.$router.push('/admin/examine')
       }
     },

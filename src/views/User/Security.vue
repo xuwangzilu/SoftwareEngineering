@@ -2,7 +2,7 @@
 <div style="background-color:#F5F5F5;">
   <el-container>
     <el-header style="padding: 0">
-      <BackNav />
+      <TopNav />
     </el-header>
     <el-main>
       <el-tabs type="border-card" style="margin:20px 10%;width: 80%;height: 470px;">
@@ -121,14 +121,13 @@
 
 <script>
 import { ElMessage } from 'element-plus';
-import BackNav from "../../components/BackNav"
 export default {
     created(){
       //调用接口: 传入（用户id） 返回（绑定手机号）
       this.telNum='137 1234 5678';
     },
     components:{
-        BackNav,
+        
     },
     data(){
         return{
