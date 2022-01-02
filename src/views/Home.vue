@@ -389,7 +389,7 @@ export default {
             gid:itemID,
           }
         })
-      }
+      },
     },
 }
 </script>
