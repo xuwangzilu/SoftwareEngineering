@@ -149,35 +149,42 @@ export default {
       },
       // 批量移除商品
       removeSelectedGoods(){
-        ElMessageBox.confirm(
-          '将从购物车中删除选中商品,是否继续操作?',
-          '确认',
-          {
-            confirmButtonText:'继续',
-            cancelButtonText:'取消',
-            type:'warning',
-          }
-        ).then(()=>{
-          // 调用接口： 传入（用户ID,商品ID） 返回(null)
-          for(let sitem of this.selectedData){
-            let index = 0;
-            for(let item of this.tableData){
-              if(item.id===sitem.id){
-                break;
-              }else{
-                index++;
-              }
-            }
-            this.tableData.splice(index,1);
-          }    
-          this.selectedData=[];
-          this.selectedNum=0;
-          this.cost=0;   
+        if(!this.selectedData.length){
           ElMessage({
-            type:'success',
-            message:'删除成功!',
-          });
-        })        
+            type:'error',
+            message:'请选中商品！',
+          });          
+        }else{
+          ElMessageBox.confirm(
+            '将从购物车中删除选中商品,是否继续操作?',
+            '确认',
+            {
+              confirmButtonText:'继续',
+              cancelButtonText:'取消',
+              type:'warning',
+            }
+          ).then(()=>{
+            // 调用接口： 传入（用户ID,商品ID） 返回(null)
+            for(let sitem of this.selectedData){
+              let index = 0;
+              for(let item of this.tableData){
+                if(item.id===sitem.id){
+                  break;
+                }else{
+                  index++;
+                }
+              }
+              this.tableData.splice(index,1);
+            }    
+            this.selectedData=[];
+            this.selectedNum=0;
+            this.cost=0;   
+            ElMessage({
+              type:'success',
+              message:'删除成功!',
+            });
+          }) 
+        }       
       },  
       // 结算
       jumpToConfirm(){
