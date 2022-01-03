@@ -18,7 +18,6 @@ import ShoppingCart from "../views/User/ShoppingCart"
 import Stream from "../views/User/Stream"
 import Upload from "../views/User/Upload"
 
-import AdminExamine from "../views/Administrator/Examine"
 import AdminReport from "../views/Administrator/HandlingReports"
 
 const routes = [
@@ -43,7 +42,6 @@ const routes = [
   { path: '/stream',		component: Stream},
   { path: '/upload',		component: Upload},
 
-	{ path: '/admin/examine',component: AdminExamine },
 	{ path: '/admin/report', component: AdminReport },
 
 ]
