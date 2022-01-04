@@ -1,9 +1,9 @@
 <template>
 <div class="orderCardList">
 	<el-radio-group v-model="orderType">
-        <el-radio :label="0">全部</el-radio>
-        <el-radio :label="1">进行中</el-radio>
-        <el-radio :label="2">已完成</el-radio>
+        <el-radio :label="2">全部</el-radio>
+        <el-radio :label="0">进行中</el-radio>
+        <el-radio :label="1">已完成</el-radio>
     </el-radio-group>
     <el-divider></el-divider>
     <div class = "orderCard" v-for="(order,index) in selectOrderList" :key="index">
@@ -26,11 +26,15 @@
                     {{"20号楼435寝室"}}
                 </div>
             </el-tooltip>
-            <el-tooltip v-if="!order.isComplete" :disabled="order.commentStars == 0" :content="order.comment" placement="top" :open-delay=500 effect="light">
+            <el-tooltip v-if="order.isCompleted" :disabled="order.commentStars == 0" :content="order.comment" placement="top" :open-delay=500 effect="light">
                 <div class="cardComment">
                     <el-rate v-model="order.commentStars" :disabled="order.commentStars > 0" @change="handleRate(order)" :icon-classes="rateIcons" void-icon-class="icon-rate-face-off" disabled-void-icon-class="icon-rate-face-off" :colors="['#99A9BF', '#F7BA2A', '#FF9900']"></el-rate>
                 </div> 
             </el-tooltip>
+            <div v-else class="cardControl">
+                <el-button type="text" size="mini" @click="confirmOrder(order.orderId)">确认完成</el-button>
+                <el-button type="text" size="mini" @click="cancelOrder(order.orderId)">取消订单</el-button>
+            </div>
         </div>
         <el-tooltip placement="right" effect="light">
             <template #content>
@@ -61,7 +65,7 @@
         </el-tooltip>
     </div>
     <div class="pagination">
-        <el-pagination :page-size="pageSize" layout="prev, pager, next" :total="orderList.length" v-model:currentPage="currentPage"></el-pagination>
+        <el-pagination :page-size="pageSize" layout="prev, pager, next" :total="selectOrders.length" v-model:currentPage="currentPage"></el-pagination>
     </div>
     <el-dialog v-model="commentDialogVisible" title="评价" width="30%" :before-close="handleCommentDialogClose">
         <div class="dialogStarsLeft">
@@ -106,7 +110,7 @@
 }
 .orderCard{
     width: 100%;
-    height: 120px;
+    height: 125px;
     margin:30px auto;
     border-radius: 15px;
     background-color:rgba(246, 248, 248, 0.8);
@@ -123,7 +127,7 @@
     color:white;
 }
 .goodPic{
-    height:120px;
+    height:125px;
     width:150px;
     border-top-left-radius: 10px;
     border-bottom-left-radius: 10px;
@@ -145,7 +149,7 @@
     float:left;
 }
 .cardPrice{
-    height:70px;
+    height:75px;
     font-family: 'Lato-Bold';
     font-size: 20px;
     line-height: 50px;
@@ -175,6 +179,10 @@
 }
 .cardComment{
     margin-top: 5px;
+}
+.cardControl{
+    margin-top: 0px;
+    float: right;
 }
 .dialogStarsLeft{
     float: left;
@@ -210,8 +218,9 @@ export default {
     },
     data(){
         return{
-            orderType: 0,
+            orderType: 2,
             orderList: [{
+                    isCustomer: true,
                     orderId: 0,
                     goodId: 0,
                     goodName: "混合商品",
@@ -228,6 +237,7 @@ export default {
                     reportReply: "很抱歉给您造成了不好的购物体验，该商家当前已被封号处理，付款金额也将在七个工作日内返回给您的账号",
                     name: "绝对不是奸商",
                 },{
+                    isCustomer: true,
                     orderId: 1,
                     goodId: 0,
                     goodName: "混合商品",
@@ -244,6 +254,7 @@ export default {
                     reportReply: "很抱歉给您造成了不好的购物体验，该商家当前已被封号处理，付款金额也将在七个工作日内返回给您的账号",
                     name: "绝对不是奸商",
                 },{
+                    isCustomer: true,
                     orderId: 2,
                     goodId: 0,
                     goodName: "混合商品",
@@ -260,12 +271,13 @@ export default {
                     reportReply: "很抱歉给您造成了不好的购物体验，该商家当前已被封号处理，付款金额也将在七个工作日内返回给您的账号",
                     name: "绝对不是奸商",
                 },{
+                    isCustomer: true,
                     orderId: 3,
                     goodId: 0,
                     goodName: "混合商品",
                     images: [require("../assets/physics.png"), require("../assets/ipad.png"), require("../assets/pen.png")],
                     time: "2022-01-02 20:40",
-                    isCompleted: true,
+                    isCompleted: false,
                     commentStars: 0,
                     price: 998,
                     photo: require("../assets/avator.png"),
@@ -276,12 +288,13 @@ export default {
                     reportReply: "很抱歉给您造成了不好的购物体验，该商家当前已被封号处理，付款金额也将在七个工作日内返回给您的账号",
                     name: "绝对不是奸商",
                 },{
+                    isCustomer: true,
                     orderId: 4,
                     goodId: 0,
                     goodName: "混合商品",
                     images: [require("../assets/physics.png"), require("../assets/ipad.png"), require("../assets/pen.png")],
                     time: "2022-01-02 20:40",
-                    isCompleted: true,
+                    isCompleted: false,
                     commentStars: 0,
                     price: 998,
                     photo: require("../assets/avator.png"),
@@ -292,7 +305,8 @@ export default {
                     reportReply: "很抱歉给您造成了不好的购物体验，该商家当前已被封号处理，付款金额也将在七个工作日内返回给您的账号",
                     name: "绝对不是奸商",
                 },{
-                    orderId: 4,
+                    isCustomer: false,
+                    orderId: 5,
                     goodId: 0,
                     goodName: "混合商品",
                     images: [require("../assets/physics.png"), require("../assets/ipad.png"), require("../assets/pen.png")],
@@ -332,9 +346,33 @@ export default {
             this.commentText='';
             this.commentDialogVisible=true;
         },
+        confirmOrder(orderId)
+        {
+            this.$confirm('该操作不可逆，是否确认完成订单？','提示')
+            .then(() => {
+                this.orderList[this.orderList.findIndex((order)=> order.orderId == orderId)].isCompleted=true;
+                this.$message({
+                    type: 'success',
+                    message: '订单已完成!'
+                })    
+            })
+            .catch(() => {});
+        },
+        cancelOrder(orderId)
+        {
+            this.$confirm('取消订单可能会扣除您一定的信誉分，是否确认要取消订单？','提示')
+            .then(() => {
+                this.orderList.splice(this.orderList.findIndex((order)=> order.orderId == orderId), 1);
+                this.$message({
+                    type: 'warning',
+                    message: '订单已取消!'
+                })    
+            })
+            .catch(() => {});
+        },
         handleCommentDialogClose()
         {
-            this.$confirm('退出后评价信息不会保存，是否确认退出！','提示')
+            this.$confirm('退出后评价信息不会保存，是否确认退出!','提示')
             .then(() => {
                 this.orderList[this.orderList.findIndex((order)=> order.orderId == this.orderId)].commentStars=0;
                 this.commentDialogVisible=false;
@@ -347,16 +385,16 @@ export default {
         },
         handleCommentDialogConfirm()
         {
-            this.$confirm('评价信息提交后不可更改，是否确认提交！','提示')
+            this.$confirm('评价信息提交后不可更改，是否确认提交!','提示')
             .then(() => {
                 if(this.commentText.length == 0)
                 {
-                    this.$alert('评价内容不可为空！', '警告', {
+                    this.$alert('评价内容不可为空!', '警告', {
                         confirmButtonText: '确定',
                         callback: () => {
                             this.$message({
                                 type: 'warning',
-                                message: '评价内容为空！'
+                                message: '评价内容为空!'
                             });
                         }
                     });
@@ -381,7 +419,7 @@ export default {
         },
         handleReportDialogClose()
         {
-            this.$confirm('退出后举报信息不会保存，是否确认退出！','提示')
+            this.$confirm('退出后举报信息不会保存，是否确认退出!','提示')
             .then(() => {
                 this.reportDialogVisible=false;
                 this.$message({
@@ -393,16 +431,16 @@ export default {
         },
         handleReportDialogConfirm()
         {
-            this.$confirm('举报信息提交后不可更改，是否确认提交！','提示')
+            this.$confirm('举报信息提交后不可更改，是否确认提交!','提示')
             .then(() => {
                 if(this.reportText.length == 0)
                 {
-                    this.$alert('举报原因不可为空！', '警告', {
+                    this.$alert('举报原因不可为空!', '警告', {
                         confirmButtonText: '确定',
                         callback: () => {
                             this.$message({
                                 type: 'warning',
-                                message: '举报内容为空！'
+                                message: '举报内容为空!'
                             });
                         }
                     });
@@ -423,10 +461,18 @@ export default {
         },
     },
     computed:{
+        selectOrders: function(){
+            var orders = new Array();
+            this.orderList.forEach((order)=>{
+                if(order.isCustomer == this.isCustomer &&(this.orderType == 2 || this.orderType == order.isCompleted))
+                    orders.push(order);
+            })
+            return orders
+        },
         selectOrderList: function(){
             var end = this.currentPage * this.pageSize;
             var begin = end - this.pageSize;
-            return this.orderList.slice(begin,end);
+            return this.selectOrders.slice(begin,end);
         },
     },
 }

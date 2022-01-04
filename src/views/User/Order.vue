@@ -5,7 +5,7 @@
             <OrderCardList :isCustomer="true"/>
         </el-tab-pane>
         <el-tab-pane label="销售订单">
-            <OrderCardList :isCustomer="true"/>
+            <OrderCardList :isCustomer="false"/>
         </el-tab-pane>
     </el-tabs>
 </div>
