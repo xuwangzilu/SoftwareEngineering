@@ -6,66 +6,73 @@
         <el-radio :label="1">已完成</el-radio>
     </el-radio-group>
     <el-divider></el-divider>
-    <div class = "orderCard" v-for="(order,index) in selectOrderList" :key="index">
-        <div class="leftCard">
-            <el-carousel height="120px" indicator-position="none">
-                <el-carousel-item v-for="(image,index) in order.images" :key="index">
-                    <img :src="image" class="goodPic">
-                </el-carousel-item>
-            </el-carousel>
-        </div>
-        <div class="midCard">
-            <el-link class="cardName" :underline=false style="cursor: pointer;" @click="clickOrder(order.goodId)">
-                {{order.goodName}}
-            </el-link>
-            <el-tooltip :content="order.detailedDescription" placement="top" :open-delay=500 effect="light">
-                <div class="cardTimeLocation">
-                    <i class="el-icon-time"></i>
-                    {{order.time}}
-                    <i class="el-icon-location"></i>
-                    {{"20号楼435寝室"}}
-                </div>
-            </el-tooltip>
-            <el-tooltip v-if="order.isCompleted" :disabled="order.commentStars == 0" :content="order.comment" placement="top" :open-delay=500 effect="light">
-                <div class="cardComment">
-                    <el-rate v-model="order.commentStars" :disabled="order.commentStars > 0" @change="handleRate(order)" :icon-classes="rateIcons" void-icon-class="icon-rate-face-off" disabled-void-icon-class="icon-rate-face-off" :colors="['#99A9BF', '#F7BA2A', '#FF9900']"></el-rate>
-                </div> 
-            </el-tooltip>
-            <div v-else class="cardControl">
-                <el-button type="text" size="mini" @click="confirmOrder(order.orderId)">确认完成</el-button>
-                <el-button type="text" size="mini" @click="cancelOrder(order.orderId)">取消订单</el-button>
+    <div v-if="selectOrderList.length">
+        <div class = "orderCard" v-for="(order,index) in selectOrderList" :key="index">
+            <div class="leftCard">
+                <el-carousel height="120px" indicator-position="none">
+                    <el-carousel-item v-for="(image,index) in order.images" :key="index">
+                        <img :src="image" class="goodPic">
+                    </el-carousel-item>
+                </el-carousel>
             </div>
-        </div>
-        <el-tooltip placement="right" effect="light">
-            <template #content>
-                <div v-if="order.reportState==0">
-                        <el-button type="text" @click="handleReport(order)">举报</el-button>
-                </div>
-                <div v-else-if="order.reportState==1">
-                    <el-popover placement="top-start" title="举报内容" width="200" trigger="hover" :content="order.reportReason">
-                        <template #reference>
-                            <el-button type="text">举报审核中</el-button>
-                        </template>
-                    </el-popover>
-                </div>
-                <div v-else>
-                    <el-popover placement="top-start" title="举报处理结果" width="200" trigger="hover" :content="order.reportReply">
-                        <template #reference>
-                            <el-button type="text">已处理</el-button>
-                        </template>
-                    </el-popover>
-                </div>
-            </template>
-            <div class="rightCard">
-                <div class="cardPrice">￥{{order.price}}</div>
-                <el-tooltip :content="order.name" placement="top" :open-delay=500 effect="light">
-                    <div class="cardPhoto"><img :src="order.photo" class="userPic"></div>
+            <div class="midCard">
+                <el-link class="cardName" :underline=false style="cursor: pointer;" @click="clickOrder(order.goodId)">
+                    {{order.goodName}}
+                </el-link>
+                <el-tooltip :content="order.detailedDescription" placement="top" :open-delay=500 effect="light">
+                    <div class="cardTimeLocation">
+                        <i class="el-icon-time"></i>
+                        {{order.time}}
+                        <i class="el-icon-location"></i>
+                        {{"20号楼435寝室"}}
+                    </div>
                 </el-tooltip>
+                <el-tooltip v-if="order.isCompleted" :disabled="order.commentStars == 0" :content="order.comment" placement="top" :open-delay=500 effect="light">
+                    <div class="cardComment">
+                        <el-rate v-model="order.commentStars" :disabled="order.commentStars > 0" @change="handleRate(order)" :icon-classes="rateIcons" void-icon-class="icon-rate-face-off" disabled-void-icon-class="icon-rate-face-off" :colors="['#99A9BF', '#F7BA2A', '#FF9900']"></el-rate>
+                    </div> 
+                </el-tooltip>
+                <div v-else class="cardControl">
+                    <el-button type="text" size="mini" @click="confirmOrder(order.orderId)">确认完成</el-button>
+                    <el-button type="text" size="mini" @click="cancelOrder(order.orderId)">取消订单</el-button>
+                </div>
             </div>
-        </el-tooltip>
+            <el-tooltip placement="right" effect="light">
+                <template #content>
+                    <div v-if="order.reportState==0">
+                            <el-button type="text" @click="handleReport(order)">举报</el-button>
+                    </div>
+                    <div v-else-if="order.reportState==1">
+                        <el-popover placement="top-start" title="举报内容" width="200" trigger="hover" :content="order.reportReason">
+                            <template #reference>
+                                <el-button type="text">举报审核中</el-button>
+                            </template>
+                        </el-popover>
+                    </div>
+                    <div v-else>
+                        <el-popover placement="top-start" title="举报处理结果" width="200" trigger="hover" :content="order.reportReply">
+                            <template #reference>
+                                <el-button type="text">已处理</el-button>
+                            </template>
+                        </el-popover>
+                    </div>
+                </template>
+                <div class="rightCard">
+                    <div class="cardPrice">￥{{order.price}}</div>
+                    <el-tooltip :content="order.name" placement="top" :open-delay=500 effect="light">
+                        <div class="cardPhoto"><img :src="order.photo" class="userPic"></div>
+                    </el-tooltip>
+                </div>
+            </el-tooltip>
+        </div>
+        <div class="pagination">
+            <el-pagination :page-size="pageSize" layout="prev, pager, next" :total="selectOrders.length" v-model:currentPage="currentPage"></el-pagination>
+        </div>
     </div>
-    <div class="pagination">
-        <el-pagination :page-size="pageSize" layout="prev, pager, next" :total="selectOrders.length" v-model:currentPage="currentPage"></el-pagination>
+    <div v-else>
+        <el-empty description="暂时没有订单，快去逛一逛叭。">
+            <el-button type="primary" @click="goHome">探索</el-button>
+        </el-empty>
     </div>
     <el-dialog v-model="commentDialogVisible" title="评价" width="30%" :before-close="handleCommentDialogClose">
         <div class="dialogStarsLeft">
@@ -110,7 +117,7 @@
 }
 .orderCard{
     width: 100%;
-    height: 125px;
+    height: 120px;
     margin:30px auto;
     border-radius: 15px;
     background-color:rgba(246, 248, 248, 0.8);
@@ -127,7 +134,7 @@
     color:white;
 }
 .goodPic{
-    height:125px;
+    height:120px;
     width:150px;
     border-top-left-radius: 10px;
     border-bottom-left-radius: 10px;
@@ -149,7 +156,7 @@
     float:left;
 }
 .cardPrice{
-    height:75px;
+    height:70px;
     font-family: 'Lato-Bold';
     font-size: 20px;
     line-height: 50px;
@@ -458,6 +465,10 @@ export default {
                 }
             })
             .catch(() => {});
+        },
+        goHome(){
+            //跳转
+            this.$router.push({path:"/home"});
         },
     },
     computed:{
