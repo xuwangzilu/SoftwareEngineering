@@ -23,7 +23,7 @@
                         收藏人数：{{good.favoriteTime}}
                     </div>
                     <div class="goodControl">
-                        <el-button size="mini" type="primary" round plain>编辑商品</el-button>
+                        <el-button size="mini" type="primary" round plain @click="editGood">编辑商品</el-button>
                         <el-button size="mini" type="danger" round plain @click="deleteGood(good.id)">下架商品</el-button>
                     </div>
                 </div>
@@ -44,6 +44,9 @@
     <div v-else>
         <el-empty description="可以点击右上方的上架商品卖掉不需要的东西，快来试试吧。"/>
     </div>
+    <el-dialog v-model="editInfo">
+        <GoodInfo/>
+    </el-dialog>
 </div>
 </template>
 
@@ -112,6 +115,7 @@
 </style>
 
 <script>
+import GoodInfo from '@/components/GoodInfo.vue'
 import '@/assets/fonts/font.css'
 
 export default {
@@ -119,7 +123,7 @@ export default {
         hasSaled: Boolean
     },
     components:{
-        
+        GoodInfo
     },
     data(){
         return{
@@ -142,12 +146,16 @@ export default {
             }],
             pageSize: 5,
             currentPage: 1,
+            editInfo: false,
         }
     },
     methods:{
         clickGood(i){
             //跳转
             this.$router.push({path:"/dataInfo",query:{goodId:i}});
+        },
+        editGood(){
+            this.editInfo = true;
         },
         deleteGood(id)
         {

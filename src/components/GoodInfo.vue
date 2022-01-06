@@ -3,7 +3,7 @@
 	<el-steps :space="200" :active="active" process-status="finish" finish-status="success" align-center>
         <el-step title="基本信息"></el-step>
         <el-step title="简介和图片"></el-step>
-        <el-step title="价格和地址"></el-step>
+        <el-step title="交易信息"></el-step>
         <el-step title="内容审核"></el-step>
     </el-steps>
     <el-card class="contentCard">
@@ -36,17 +36,18 @@
         <div v-if="active==1">
             <div>
                 <div style="width:50px;">简介:</div>
-                <el-input v-model="introductionInput" placeholder="快来简单介绍一下你的商品吧" type="textarea" autosize class="titleInput"/>
+                <el-input v-model="introductionInput" placeholder="快来简单介绍一下你的商品吧" type="textarea" autosize class="introductionInput"/>
             </div>
             <div>
                 <div style="width:50px;margin-top:20px">图片:</div>
                 <el-upload
-                    action="#"
+                    ref="picList"
+                    action=""
                     list-type="picture-card"
                     :auto-upload="false"
                     :on-preview="handlePictureCardPreview"
-                    :file-list="picList"
-                    :limit="7"
+                    :on-exceed="handleExceed"
+                    :limit="5"
                 >
                     <i class="el-icon-plus"></i>
                     <template #tip>
@@ -54,15 +55,45 @@
                     </template>
                 </el-upload>
                 <el-dialog v-model="picPreview">
-                    <img width="100%" :src="previewUrl" alt="" />
+                    <img  width="600" :src="previewUrl" alt="" />
                 </el-dialog>
             </div>
         </div>
         <div v-if="active==2">
+            <div>
+                价格:
+                <el-input-number v-model="priceInput" :min="0" class="priceInput"/>
+            </div>
+            <div>
+                交易地址:     
+                <el-input v-model="locationInput" placeholder="若不输入，则由买家决定地址。" class="locationInput"/>
+            </div>
+            <div v-if="locationInput.length">
+                <div class="locationDescriptionTitle">地址说明:</div>
+                <el-input v-model="locationDescriptionInput" placeholder="详细介绍地址的信息" type="textarea" autosize class="locationDescriptionInput"/>
+            </div>
+            <div class="timeInput">
+                交易时间:
+                <el-time-picker
+                    v-model="timeInput"
+                    is-range
+                    range-separator="To"
+                    start-placeholder="Start time"
+                    end-placeholder="End time"
+                    style="margin-left:10px"
+                    format="HH:mm"
+                    :clearable=false
+                >
+                </el-time-picker>
+            </div>
+            <div v-if="timeChanged">
+                <div class="timeDescriptionTitle">时间说明:</div>
+                <el-input v-model="timeDescriptionInput" placeholder="详细说明你对于交易时间的要求" type="textarea" autosize class="timeDescriptionInput"/>
+            </div>
         </div>
         <div v-if="active==3">
-        </div>
-        <div v-if="active==4">
+            <div style="margin-bottom:20px">审核成功</div>
+            <el-progress :percentage="100" type="circle" status="success"/>
         </div>
     </el-card>
     <div v-if="active < 4" class="controlButton">
@@ -75,7 +106,7 @@
 <style scoped>
 .GoodInfo{
     width: 500px;
-    min-height: 600px;
+    min-height: 400px;
     margin: 0 auto;
     position: relative;
 }
@@ -113,6 +144,45 @@
     margin-right:150px;
     margin-top: 20px;
 }
+.introductionInput {
+    width: 300px;
+    margin-left:10px;
+    margin-top: 16px;
+}
+.priceInput{
+    width:150px;
+    margin-left:10px;
+    margin-right:150px;
+    margin-top: 20px;
+}
+.locationInput{
+    width:300px;
+    margin-left:10px;
+    margin-right:32px;
+    margin-top: 20px;
+}
+.locationDescriptionTitle{
+    width:100px;
+    margin-left:6px;
+    margin-top: 20px;
+}
+.locationDescriptionInput{
+    width: 300px;
+    margin-left:50px;
+}
+.timeInput{
+    margin-left:15px;
+    margin-top: 20px;
+}
+.timeDescriptionTitle{
+    width:100px;
+    margin-left:6px;
+    margin-top: 20px;
+}
+.timeDescriptionInput{
+    width: 300px;
+    margin-left:50px;
+}
 </style>
 
 <script>
@@ -148,7 +218,11 @@ export default {
             ],
             previewUrl: '',
             picPreview: false,
-            picList: [],
+            priceInput: 0,
+            locationInput: '',
+            timeInput: [new Date(2016, 9, 10, 0, 0), new Date(2016, 9, 10, 23, 59)],
+            locationDescriptionInput: '',
+            timeDescriptionInput: '',
         }
     },
     methods:{
@@ -195,15 +269,25 @@ export default {
             }
         },
         handlePictureCardPreview(file) {
-            console.log(file.url)
-            console.log(this.picList)
-            this.previewUrl = file.url;
+            //图片信息
+            //this.$refs.picList.uploadFiles[i].url
+            this.previewUrl = URL.createObjectURL(file.raw);
             this.picPreview = true;
-      }
+        },
+        handleExceed(){
+            ElMessage.error('最多上传5张图片!');
+        }
     },
     computed:{
         buttonInfo: function(){
             return this.active < 3 ? "下一步" : "发布";
+        },
+        timeChanged: function(){
+            if(this.timeInput[0].getHours() != 0 || this.timeInput[0].getMinutes() != 0)
+                return true;
+            if(this.timeInput[1].getHours() != 23 || this.timeInput[1].getMinutes() != 59)
+                return true;
+            return false;
         },
     },
 }
