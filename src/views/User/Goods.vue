@@ -8,6 +8,7 @@
             <GoodCardList :hasSaled="true"/>
         </el-tab-pane>
         <el-tab-pane label="上架商品">
+            <GoodInfo/>
         </el-tab-pane>
     </el-tabs>
 </div>
@@ -22,9 +23,11 @@
 
 <script>
 import GoodCardList from '@/components/GoodCardList.vue'
+import GoodInfo from '@/components/GoodInfo.vue'
 export default {
     components:{
-        GoodCardList
+        GoodCardList,
+        GoodInfo
     },
     data(){
         return{
