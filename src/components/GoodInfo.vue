@@ -72,21 +72,7 @@
                 <div class="locationDescriptionTitle">地址说明:</div>
                 <el-input v-model="locationDescriptionInput" placeholder="详细介绍地址的信息" type="textarea" autosize class="locationDescriptionInput"/>
             </div>
-            <div class="timeInput">
-                交易时间:
-                <el-time-picker
-                    v-model="timeInput"
-                    is-range
-                    range-separator="To"
-                    start-placeholder="Start time"
-                    end-placeholder="End time"
-                    style="margin-left:10px"
-                    format="HH:mm"
-                    :clearable=false
-                >
-                </el-time-picker>
-            </div>
-            <div v-if="timeChanged">
+            <div>
                 <div class="timeDescriptionTitle">时间说明:</div>
                 <el-input v-model="timeDescriptionInput" placeholder="详细说明你对于交易时间的要求" type="textarea" autosize class="timeDescriptionInput"/>
             </div>
@@ -173,10 +159,6 @@
     width: 300px;
     margin-left:50px;
 }
-.timeInput{
-    margin-left:15px;
-    margin-top: 20px;
-}
 .timeDescriptionTitle{
     width:100px;
     margin-left:6px;
@@ -198,7 +180,7 @@ export default {
     },
     data(){
         return{
-            active: 1,
+            active: 0,
             titleInput: "",
             nameInput: "",
             keywordsInput: "",
@@ -223,9 +205,9 @@ export default {
             picPreview: false,
             priceInput: 0,
             locationInput: '',
-            timeInput: [new Date(2016, 9, 10, 0, 0), new Date(2016, 9, 10, 23, 59)],
             locationDescriptionInput: '',
             timeDescriptionInput: '',
+            imgaes: [],
         }
     },
     methods:{
@@ -253,8 +235,10 @@ export default {
             case 1:
                 if(this.introductionInput == "")
                     ElMessage.error('商品简介不可为空!');
-                else
+                else{
+                    this.images=this.$refs.picList.uploadFiles;
                     ++this.active;
+                }
                 break;
             case 2:
                 ++this.active;
@@ -266,14 +250,14 @@ export default {
                         type: 'success',
                         message: '上架成功'
                     })
-                    location.reload();
+                    console.log(URL.createObjectURL(this.images[0]));
+                    //location.reload();
                 })
                 .catch(() => {});
             }
         },
         handlePictureCardPreview(file) {
             //图片信息
-            //this.$refs.picList.uploadFiles[i].url
             this.previewUrl = URL.createObjectURL(file.raw);
             this.picPreview = true;
         },

@@ -17,6 +17,10 @@
                         {{comment.text}}
                     </el-scrollbar>
                 </div>
+                <div class="commentStar">
+                    <div style="width:30%;float:left;">评分:</div>
+                    <el-rate v-model="comment.rate" disabled :show-score="comment.length" text-color="#ff9900" style="width:60%;float:left"/>
+                </div>
             </div>
         </el-card>
         <div class="pagination">
@@ -65,7 +69,12 @@
     float:right;
     margin-right: 50px;
     margin-top: 15px;
-    height: 60px;
+    height: 45px;
+}
+.commentStar{
+    width: 60%;
+    float:left;
+    margin-top: 10px;
 }
 </style>
 
