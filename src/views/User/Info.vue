@@ -28,10 +28,10 @@
                     {{birthday}}
                 </el-form-item>
                 <el-form-item label="买家分数:">
-                    <el-rate v-model="buyerRate" disabled show-score text-color="#ff9900" style="margin-top:10px"/>
+                    <el-rate v-model="buyerRate" disabled :show-score="buyerCommentList.length" text-color="#ff9900" style="margin-top:10px"/>
                 </el-form-item>
                 <el-form-item label="卖家分数:">
-                    <el-rate v-model="sellerRate" disabled show-score text-color="#ff9900" style="margin-top:10px"/>
+                    <el-rate v-model="sellerRate" disabled :show-score="sellerCommentList.length" text-color="#ff9900" style="margin-top:10px"/>
                 </el-form-item>
             </el-form>
         </el-card>
