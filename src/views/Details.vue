@@ -1,5 +1,5 @@
 <template>
-<el-card class="details">
+<div class="details">
     <el-card class="sellerInfo" @click="jumpSeller">
         <el-avatar :src="avatarPic" :size="100"/>
             <div class="nickName">{{ nickName }}</div>
@@ -14,7 +14,6 @@
             </el-form>
     </el-card>
     <div class="goodInfo">
-        <div class="goodTop">
             <div class="goodBaseInfo">
                 <el-carousel height="240px">
                     <el-carousel-item v-for="(image,index) in images" :key="index">
@@ -37,21 +36,15 @@
                     </el-form-item>
                 </el-form>
             </div>
-        </div>
-        <div class="goodMiddle">
-            <div>详细信息</div>
-            <el-divider/>
             <div class="goodDescription">
-            {{goodDescription}}
+                <el-divider/>
+                {{goodDescription}}
             </div>
-        </div>
-        <div class="goodControl">
             <el-button :type="isFavorite" icon="el-icon-star-off" circle @click="favorite"></el-button>
             <el-button :type="isShoppingCart" icon="el-icon-shopping-cart-2" circle @click="shoppingCart"></el-button>
             <el-button type="primary" icon="el-icon-shopping-bag-1" circle @click="buy(id)"></el-button>
         </div>
-    </div>
-</el-card>
+</div>
 </template>
 
 <style scoped>
@@ -86,9 +79,11 @@
     margin-left: 30px;
     width: 60%;
     text-align: center;
-    padding: 0;
-    height: 600px;
+    padding: 20px;
+    min-height: 600px;
     float: left;
+    border-radius: 15px;
+    box-shadow: rgba(0, 0, 0, 0.4) 0px 2px 4px, rgba(0, 0, 0, 0.3) 0px 7px 13px -3px, rgba(0, 0, 0, 0.2) 0px -3px 0px inset;
 }
 .goodBaseInfo{
     width:40%;
@@ -101,7 +96,7 @@
     float:left;
     margin-left: 10%;
     font-family: 'FZHeiBJW';
-    padding: 5px 0;
+    padding: 10px 0;
 }
 .title{
     font-size: 27px;
@@ -111,24 +106,11 @@
     padding: 0 20;
     height: 110px;
 }
-.goodTop{
-    height:250px;
-    padding: 20px 0;
-    width:100%;
-    border-radius: 15px;
-    box-shadow: rgba(0, 0, 0, 0.4) 0px 2px 4px, rgba(0, 0, 0, 0.3) 0px 7px 13px -3px, rgba(0, 0, 0, 0.2) 0px -3px 0px inset;
-}
-.goodMiddle{
-    margin-top: 10px;
-    padding: 20px 0;
-    width:100%;
-    font-family: 'FZHeiBJW';
-    border-radius: 15px;
-    box-shadow: rgba(0, 0, 0, 0.4) 0px 2px 4px, rgba(0, 0, 0, 0.3) 0px 7px 13px -3px, rgba(0, 0, 0, 0.2) 0px -3px 0px inset;
-}
 .goodDescription{
+    width:100%;
+    float:left;
     font-size: 10px;
-    min-height: 120px;
+    min-height: 250px;
 }
 .goodControl{
     margin-top: 20px;
