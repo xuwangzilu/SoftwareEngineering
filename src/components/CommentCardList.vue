@@ -1,26 +1,29 @@
 <template>
 <div class="commentCardList">
-    <el-card v-for="(comment,index) in selectComments" :key="index" class="commentCard" :body-style="{ padding: '0px' }">
-        <div class="time">
-            {{comment.time}}
-        </div>
-        <div class="commentCotent">
-            <div class="commentatorInfo"> 
-                <div class="commentAvatar">
-                    <el-avatar :src="comment.avatar" :size="50"/>
+    <div v-if="comments.length">
+        <el-card v-for="(comment,index) in selectComments" :key="index" class="commentCard" :body-style="{ padding: '0px' }">
+            <div class="time">
+                {{comment.time}}
+            </div>
+            <div class="commentCotent">
+                <div class="commentatorInfo"> 
+                    <div class="commentAvatar">
+                        <el-avatar :src="comment.avatar" :size="50"/>
+                    </div>
+                        {{comment.name}}
                 </div>
-                    {{comment.name}}
+                <div class="commentText">
+                    <el-scrollbar>
+                        {{comment.text}}
+                    </el-scrollbar>
+                </div>
             </div>
-            <div class="commentText">
-                <el-scrollbar>
-                    {{comment.text}}
-                </el-scrollbar>
-            </div>
+        </el-card>
+        <div class="pagination">
+            <el-pagination :page-size="pageSize" layout="prev, pager, next" :total="comments.length" v-model:currentPage="currentPage"></el-pagination>
         </div>
-    </el-card>
-    <div class="pagination">
-        <el-pagination :page-size="pageSize" layout="prev, pager, next" :total="comments.length" v-model:currentPage="currentPage"></el-pagination>
     </div>
+    <el-empty description="暂时还没有评论。" v-else/>
 </div>
 </template>
 

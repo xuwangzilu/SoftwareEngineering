@@ -28,10 +28,10 @@
                     {{birthday}}
                 </el-form-item>
                 <el-form-item label="买家分数:">
-                    <el-rate v-model="buyerRate" disabled show-score text-color="#ff9900" style="margin-top:10px"/>
+                    <el-rate v-model="buyerRate" disabled :show-score="buyerCommentList.length" text-color="#ff9900" style="margin-top:10px"/>
                 </el-form-item>
                 <el-form-item label="卖家分数:">
-                    <el-rate v-model="sellerRate" disabled show-score text-color="#ff9900" style="margin-top:10px"/>
+                    <el-rate v-model="sellerRate" disabled :show-score="sellerCommentList.length" text-color="#ff9900" style="margin-top:10px"/>
                 </el-form-item>
             </el-form>
         </el-card>
@@ -149,26 +149,7 @@ export default {
             nickNameInput: '',
             introductionInput: '',
             birthdayInput: '',
-            buyerCommentList: [{
-                    time: "2022-01-07 09:55",
-                    name: "王大队长",
-                    rate: 3.6,
-                    avatar: "https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png",
-                    text: "有人说，有人在饭里下了毒，我们都不敢吃。",
-                },{
-                    time: "2022-01-07 09:55",
-                    rate: 3.6,
-                    name: "司令员",
-                    avatar: "https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png",
-                    text: "我信，我非常相信。你要是没下毒，你就把这碗鸡汤喝了。你看你每天忙里忙完的，多辛苦呀，喝完鸡汤算什么呀，你要是不喝，就说明你真的下毒了。",
-                },{
-                    time: "2022-01-07 09:55",
-                    name: "王大队长",
-                    rate: 3.6,
-                    avatar: "https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png",
-                    text: "有人说，有人在饭里下了毒，我们都不敢吃。",
-                },
-            ],
+            buyerCommentList: [],
             sellerCommentList: [{
                     time: "2022-01-07 09:55",
                     name: "王大队长",
