@@ -92,8 +92,11 @@
             </div>
         </div>
         <div v-if="active==3">
-            <div style="margin-bottom:20px">审核成功</div>
-            <el-progress :percentage="100" type="circle" status="success"/>
+            <el-result
+                icon="success"
+                title="审核成功"
+                sub-title="点击发布按钮就可以完成上架了！"
+            />
         </div>
     </el-card>
     <div v-if="active < 4" class="controlButton">
@@ -257,7 +260,7 @@ export default {
                 ++this.active;
                 break;
             case 3:
-                this.$confirm('确认后将对商品进行审核，审核通过后完成上架了！','提示')
+                this.$confirm('确认要上架商品吗？','提示')
                 .then(() => {
                     this.$message({
                         type: 'success',
