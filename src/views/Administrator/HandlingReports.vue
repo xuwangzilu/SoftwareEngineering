@@ -23,6 +23,20 @@
                 <el-button type="primary" @click="submit">提交</el-button>
             </el-form-item>
         </el-form>
+        <el-dialog v-model="isBlockUser">
+            <el-form>
+            <el-form-item label="封禁天数">
+                <el-input-number v-model="days"/>
+            </el-form-item>
+            <el-form-item label="封禁原因">
+                <el-input v-model="blockReason" type="textarea" autosize class="timeDescriptionInput"/>
+            </el-form-item>
+            <el-form-item>
+                <el-button type="danger" @click="cancel">取消</el-button>
+                <el-button type="primary" @click="confirm">确认</el-button>
+            </el-form-item>
+            </el-form>
+        </el-dialog>
     </el-card>
 </div>
 </template>
@@ -50,22 +64,32 @@ export default {
     data(){
         return{
             num: 5,
-            reporter: 12345678,
-            reported: 2345678,
-            reason: "啊吧啊吧",
+            reporter: 1952218,
+            reported: 1950001,
+            reason: "这个人出售假冒伪劣产品，可谓是可恶至极！",
             result: "",
+            isBlockUser: false,
+            days:0,
+            blockReason:'',
         }
     },
     methods:{
         blockUser(){
-            this.$confirm('确认要封禁改用户吗？','提示')
+            this.isBlockUser=true;
+        },
+        confirm(){
+            this.$confirm('确认要封禁该用户吗？','提示')
                 .then(() => {
+                    this.isBlockUser=false;
                     this.$message({
                         type: 'success',
                         message: '封禁成功'
                     })
                 })
                 .catch(() => {});
+        },
+        cancel(){
+            this.isBlockUser=false;
         },
         submit(){
             this.$confirm('确认提交审理结果吗？','提示')
