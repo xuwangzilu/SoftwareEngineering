@@ -39,35 +39,6 @@
         </el-dialog>
     </el-card>
 </div>
- <el-header height="120px">
-    <div class="upheader">
-      <router-link to="/personalpage">
-       <i class="el-icon-s-custom" id="personinfo">账户信息</i>
-        </router-link>
-
-      <router-link to="/Login">
-        <i class="el-icon-switch-button" id="returnLogin">退出登录</i>
-      </router-link>
-      <div class="logo margin1">
-        ADMINISTRATOR
-        </div>
-
-    </div>
-    <el-menu
-      class="el-menu margin1"
-      mode="horizontal"
-      background-color="#003680"
-      text-color="#fff"
-      active-text-color="#ffd04b"
-    >
-      
-      <el-menu-item index="1"
-        ><router-link to="/admin/handle">受理举报</router-link></el-menu-item
-      >
-      
-    </el-menu>
-  </el-header>
-  
 </template>
 
 <style scoped>
