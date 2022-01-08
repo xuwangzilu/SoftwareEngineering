@@ -20,10 +20,14 @@
                 <el-input v-model="locationDescription" autosize type="textarea"></el-input>
             </el-form-item>
             <el-form-item label="交易日期:">
-                <el-date-picker type="date" placeholder="Pick a day"/>
+                <el-date-picker v-model="date" type="date" placeholder="选择交易日期"/>
             </el-form-item>
             <el-form-item label="交易时间:">
-                <el-time-picker format="HH:mm" placeholder="Arbitrary time"/>
+                <el-time-picker v-model="time" format="HH:mm" placeholder="选择交易时间"/>
+            </el-form-item>
+            <el-form-item>
+                <el-button type="danger" @click="cancel">取消</el-button>
+                <el-button type="primary" @click="pay">支付</el-button>
             </el-form-item>
         </el-form>
     </el-card>
@@ -54,14 +58,34 @@ export default {
     },
     data(){
         return{
-            sellerLocation: '111',
-            sellerLocationDescription: '1111',
+            sellerLocation: '',
+            sellerLocationDescription: '',
             sellerTimeDescription: '',
             location: '',
             locationDescription: '',
+            date: '',
+            time: '',
+            id: 0,
         }
     },
     methods:{
+        cancel(){
+            this.$router.push({
+                path:'/details',
+                query:{
+                    gid:this.id,
+                }
+            })
+        },
+        pay(){
+            this.$confirm('确认下单吗？','提示')
+                .then(() => {
+                    this.$router.push({
+                        path:'/home'
+                    })
+                })
+                .catch(() => {});
+        }
     }
 }
 </script>
