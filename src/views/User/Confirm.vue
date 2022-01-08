@@ -6,7 +6,7 @@
 	<el-card class="card">
         <el-form label-width="90px">
             <el-form-item label="商品价格:">
-                ￥500
+                ￥{{price}}
             </el-form-item>
             <el-form-item label="交易地址:">
                 <div v-if="sellerLocation.length">{{sellerLocation}}</div>
@@ -31,6 +31,13 @@
             </el-form-item>
         </el-form>
     </el-card>
+    <el-dialog v-model="paymentDialog" width="30%">
+        <el-image :src="paymentImage"/>
+        <span>
+            <el-button type="danger" @click="cancelPay">取消</el-button>
+            <el-button type="primary" @click="confirmPay">已支付</el-button>
+        </span>
+    </el-dialog>
 </div>
 </template>
 
@@ -66,6 +73,9 @@ export default {
             date: '',
             time: '',
             id: 0,
+            price: 20,
+            paymentImage: require("../../assets/payment.jpg"),
+            paymentDialog: false,
         }
     },
     methods:{
@@ -80,6 +90,17 @@ export default {
         pay(){
             this.$confirm('确认下单吗？','提示')
                 .then(() => {
+                    this.paymentDialog=true;
+                })
+                .catch(() => {});
+        },
+        cancelPay(){
+            this.paymentDialog=false;
+        },
+        confirmPay(){
+            this.$confirm('确认已完成支付吗？','提示')
+                .then(() => {
+                    this.paymentDialog=false;
                     this.$router.push({
                         path:'/home'
                     })
